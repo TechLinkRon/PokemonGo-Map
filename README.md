@@ -9,9 +9,8 @@ Live visualization of all the pokemon (with option to show gyms and pokestops) i
 
 ## Features:
 
-* Added by Ron
 * Shows Pokemon, Pokestops, and gyms with a clean GUI.
-* Notifications
+* Notifications 
 * Lure information
 * Multithreaded mode
 * Filters
