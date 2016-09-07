@@ -2327,4 +2327,25 @@ $(function () {
       heightStyle: 'content'
     })
   }
+
+  // Initialize dataTable in statistics sidebar
+  //   - turn off sorting for the 'icon' column
+  //   - initially sort 'name' column alphabetically
+  
+  $('#pokemonList_table').DataTable({
+      paging: false,
+      searching: false,
+      info: false,
+      errMode: 'throw',
+      "columns": [
+          { "orderable": false },
+          null,
+          null,
+          null
+          ]
+      }).order([1, 'asc']);
+
+
+
+
 })
