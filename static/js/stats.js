@@ -48,8 +48,40 @@ function countMarkers () { // eslint-disable-line no-unused-vars
     .draw()
 
   } else {
-    // document.getElementById('arenaList').innerHTML = 'Gyms markers are disabled'
+
+    pokeStatTable
+      .clear()
   }
+
+  if (Store.get('showGyms')) {
+    $.each(mapData.gyms, function (key, value) {
+      if (arenaCount[mapData.gyms[key]['team_id']] === 0 || !arenaCount[mapData.gyms[key]['team_id']]) {
+        arenaCount[mapData.gyms[key]['team_id']] = 1
+      } else {
+        arenaCount[mapData.gyms[key]['team_id']] += 1
+      }
+      arenaTotal++
+    })
+    var arenaListString = '<table><th>Icon</th><th>Team Color</th><th>Count</th><th>%</th><tr><td></td><td>Total</td><td>' + arenaTotal + '</td></tr>'
+    for (i = 0; i < arenaCount.length; i++) {
+      if (arenaCount[i] > 0) {
+        if (i === 1) {
+          arenaListString += '<tr><td><img src="static/forts/Mystic.png" /></td><td>' + 'Blue' + '</td><td>' + arenaCount[i] + '</td><td>' + Math.round(arenaCount[i] * 100 / arenaTotal * 10) / 10 + '%</td></tr>'
+        } else if (i === 2) {
+          arenaListString += '<tr><td><img src="static/forts/Valor.png" /></td><td>' + 'Red' + '</td><td>' + arenaCount[i] + '</td><td>' + Math.round(arenaCount[i] * 100 / arenaTotal * 10) / 10 + '%</td></tr>'
+        } else if (i === 3) {
+          arenaListString += '<tr><td><img src="static/forts/Instinct.png" /></td><td>' + 'Yellow' + '</td><td>' + arenaCount[i] + '</td><td>' + Math.round(arenaCount[i] * 100 / arenaTotal * 10) / 10 + '%</td></tr>'
+        } else {
+          arenaListString += '<tr><td><img src="static/forts/Uncontested.png" /></td><td>' + 'Clear' + '</td><td>' + arenaCount[i] + '</td><td>' + Math.round(arenaCount[i] * 100 / arenaTotal * 10) / 10 + '%</td></tr>'
+        }
+      }
+    }
+    arenaListString += '</table>'
+    document.getElementById('arenaList').innerHTML = arenaListString
+  } else {
+        document.getElementById('arenaList').innerHTML = 'Gyms markers are disabled'
+  }
+  
   if (Store.get('showPokestops')) {
     $.each(mapData.pokestops, function (key, value) {
       if (mapData.pokestops[key]['lure_expiration'] && mapData.pokestops[key]['lure_expiration'] > 0) {
