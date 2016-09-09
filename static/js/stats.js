@@ -32,7 +32,7 @@ function countMarkers () { // eslint-disable-line no-unused-vars
       pokeCounts.push(
         [
           "<img src='static/icons/" + pkmnCount[i].ID + ".png' />",
-          pkmnCount[i].Name,
+          "<a href=\'http://www.pokemon.com/us/pokedex/" + pkmnCount[i].ID + "\' target=\'_blank\' title=\'View in Pokedex\' style=\'color: black;\'>" + pkmnCount[i].Name + "</a>",
           pkmnCount[i].Count,
           (Math.round(pkmnCount[i].Count * 100 / pkmnTotal * 10) / 10) + "%"
         ]
@@ -81,7 +81,7 @@ function countMarkers () { // eslint-disable-line no-unused-vars
   } else {
         document.getElementById('arenaList').innerHTML = 'Gyms markers are disabled'
   }
-  
+
   if (Store.get('showPokestops')) {
     $.each(mapData.pokestops, function (key, value) {
       if (mapData.pokestops[key]['lure_expiration'] && mapData.pokestops[key]['lure_expiration'] > 0) {
