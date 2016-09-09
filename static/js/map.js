@@ -2405,22 +2405,18 @@ $(function () {
   //   - initially sort 'name' column alphabetically
 
   $('#pokemonList_table').DataTable({
-      paging: false,
-      searching: false,
-      info: false,
-      errMode: 'throw',
-      "language": {
-            "emptyTable": ""
-          },
-      "columns": [
-          { "orderable": false },
-          null,
-          null,
-          null
-          ]
-      }).order([1, 'asc']);
-
-
-
-
+    paging: false,
+    searching: false,
+    info: false,
+    errMode: 'throw',
+    'language': {
+      'emptyTable': ''
+    },
+    'columns': [
+      { 'orderable': false },
+      null,
+      null,
+      null
+    ]
+  }).order([1, 'asc'])
 })

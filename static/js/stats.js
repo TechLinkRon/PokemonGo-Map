@@ -25,33 +25,31 @@ function countMarkers () { // eslint-disable-line no-unused-vars
         pkmnCount[mapData.pokemons[key]['pokemon_id']].Count += 1
       }
       pkmnTotal++
-  })
+    })
 
-  var pokeCounts = []
+    var pokeCounts = []
 
-  for (i = 0; i < pkmnCount.length; i++) {
-    if (pkmnCount[i] && pkmnCount[i].Count > 0) {
-      pokeCounts.push(
-        [
-          "<img src='static/icons/" + pkmnCount[i].ID + ".png' />",
-          "<a href=\'http://www.pokemon.com/us/pokedex/" + pkmnCount[i].ID + "\' target=\'_blank\' title=\'View in Pokedex\' style=\'color: black;\'>" + pkmnCount[i].Name + "</a>",
-          pkmnCount[i].Count,
-          (Math.round(pkmnCount[i].Count * 100 / pkmnTotal * 10) / 10) + "%"
-        ]
-      )
+    for (i = 0; i < pkmnCount.length; i++) {
+      if (pkmnCount[i] && pkmnCount[i].Count > 0) {
+        pokeCounts.push(
+          [
+            '<img src=\'static/icons/' + pkmnCount[i].ID + '.png\' />',
+            '<a href=\'http://www.pokemon.com/us/pokedex/' + pkmnCount[i].ID + '\' target=\'_blank\' title=\'View in Pokedex\' style=\'color: black;\'>' + pkmnCount[i].Name + '</a>',
+            pkmnCount[i].Count,
+            (Math.round(pkmnCount[i].Count * 100 / pkmnTotal * 10) / 10) + '%'
+          ]
+        )
+      }
     }
-  }
 
-  // Clear stale data, add fresh data, redraw
+    // Clear stale data, add fresh data, redraw
 
-  $('#pokemonList_table').dataTable().show()
-  pokeStatTable
-    .clear()
-    .rows.add(pokeCounts)
-    .draw()
-
+    $('#pokemonList_table').dataTable().show()
+    pokeStatTable
+      .clear()
+      .rows.add(pokeCounts)
+      .draw()
   } else {
-
     pokeStatTable
       .clear()
       .draw()
@@ -86,7 +84,7 @@ function countMarkers () { // eslint-disable-line no-unused-vars
     arenaListString += '</table>'
     document.getElementById('arenaList').innerHTML = arenaListString
   } else {
-        document.getElementById('arenaList').innerHTML = 'Gyms markers are disabled'
+    document.getElementById('arenaList').innerHTML = 'Gyms markers are disabled'
   }
 
   if (Store.get('showPokestops')) {
@@ -120,23 +118,5 @@ function countMarkers () { // eslint-disable-line no-unused-vars
     document.getElementById('pokestopList').innerHTML = pokestopListString
   } else {
     document.getElementById('pokestopList').innerHTML = 'PokéStops markers are disabled'
-  }
-}
-
-var sortBy = function (field, reverse, primer) {
-  var key = primer
-    ? function (x) {
-      return primer(x[field])
-    }
-    : function (x) {
-      return x[field]
-    }
-
-  reverse = !reverse ? 1 : -1
-
-  return function (a, b) {
-    a = key(a)
-    b = key(b)
-    return reverse * ((a > b) - (b > a))
   }
 }
