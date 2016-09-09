@@ -1,4 +1,5 @@
 function countMarkers () { // eslint-disable-line no-unused-vars
+  document.getElementById('stats-ldg-label').innerHTML = ''
   document.getElementById('stats-pkmn-label').innerHTML = 'Pokémon'
   document.getElementById('stats-gym-label').innerHTML = 'Gyms'
   document.getElementById('stats-pkstop-label').innerHTML = 'PokéStops'
@@ -10,6 +11,8 @@ function countMarkers () { // eslint-disable-line no-unused-vars
   var pkmnTotal = 0
   var pokestopCount = []
   var pokestopTotal = 0
+  var pokeStatTable = $('#pokemonList_table').DataTable()
+
   if (Store.get('showPokemon')) {
     $.each(mapData.pokemons, function (key, value) {
       if (pkmnCount[mapData.pokemons[key]['pokemon_id']] === 0 || !pkmnCount[mapData.pokemons[key]['pokemon_id']]) {
@@ -25,7 +28,6 @@ function countMarkers () { // eslint-disable-line no-unused-vars
   })
 
   var pokeCounts = []
-  var pokeStatTable = $('#pokemonList_table').DataTable()
 
   for (i = 0; i < pkmnCount.length; i++) {
     if (pkmnCount[i] && pkmnCount[i].Count > 0) {
@@ -42,6 +44,7 @@ function countMarkers () { // eslint-disable-line no-unused-vars
 
   // Clear stale data, add fresh data, redraw
 
+  $('#pokemonList_table').dataTable().show()
   pokeStatTable
     .clear()
     .rows.add(pokeCounts)
@@ -51,6 +54,10 @@ function countMarkers () { // eslint-disable-line no-unused-vars
 
     pokeStatTable
       .clear()
+      .draw()
+
+    document.getElementById('pokeStatStatus').innerHTML = 'Pokemon markers are disabled'
+    $('#pokemonList_table').dataTable().hide()
   }
 
   if (Store.get('showGyms')) {
