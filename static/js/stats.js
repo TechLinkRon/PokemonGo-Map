@@ -1,8 +1,8 @@
 function countMarkers () { // eslint-disable-line no-unused-vars
   document.getElementById('stats-ldg-label').innerHTML = ''
-  document.getElementById('stats-pkmn-label').innerHTML = 'Pokémon'
-  document.getElementById('stats-gym-label').innerHTML = 'Gyms'
-  document.getElementById('stats-pkstop-label').innerHTML = 'PokéStops'
+  // document.getElementById('stats-pkmn-label').innerHTML = 'Pokémon'
+  // document.getElementById('stats-gym-label').innerHTML = 'Gyms'
+  // document.getElementById('stats-pkstop-label').innerHTML = 'PokéStops'
 
   var i = 0
   var arenaCount = []
@@ -54,7 +54,7 @@ function countMarkers () { // eslint-disable-line no-unused-vars
       .clear()
       .draw()
 
-    document.getElementById('pokeStatStatus').innerHTML = 'Pokemon markers are disabled'
+    document.getElementById('pokeStatStatus').innerHTML = 'Pokémon markers are disabled'
     $('#pokemonList_table').dataTable().hide()
   }
 
@@ -67,7 +67,8 @@ function countMarkers () { // eslint-disable-line no-unused-vars
       }
       arenaTotal++
     })
-    var arenaListString = '<table><th>Icon</th><th>Team Color</th><th>Count</th><th>%</th><tr><td></td><td>Total</td><td>' + arenaTotal + '</td></tr>'
+    var arenaListString = '<table><thead><tr><th>Icon</th><th>Team Color</th><th>Count</th><th>%</th></tr></thead>'
+    arenaListString += '<tbody><tr><td></td><td>Total</td><td>' + arenaTotal + '</td></tr>'
     for (i = 0; i < arenaCount.length; i++) {
       if (arenaCount[i] > 0) {
         if (i === 1) {
@@ -81,7 +82,7 @@ function countMarkers () { // eslint-disable-line no-unused-vars
         }
       }
     }
-    arenaListString += '</table>'
+    arenaListString += '</tbody></table>'
     document.getElementById('arenaList').innerHTML = arenaListString
   } else {
     document.getElementById('arenaList').innerHTML = 'Gyms markers are disabled'

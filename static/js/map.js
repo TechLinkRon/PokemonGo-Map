@@ -1557,6 +1557,14 @@ $(function () {
     })
   }
 
+  if ($('#stat-accordion').length) {
+    $('#stat-accordion').accordion({
+      active: 0,
+      collapsible: true,
+      heightStyle: 'content'
+    })
+  }
+
   // Initialize dataTable in statistics sidebar
   //   - turn off sorting for the 'icon' column
   //   - initially sort 'name' column alphabetically

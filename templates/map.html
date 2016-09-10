@@ -244,34 +244,37 @@
       </nav>
       <nav id="stats">
         <div class="switch-container">
-          <div class="switch-container">
-            <div><center><a href="stats">Full Stats</a></center></div>
-          </div>
-          <div class="switch-container">
-            <center><h1 id="stats-ldg-label">Loading...</h1></center>
-          </div>
-          <div class="stats-label-container">
-            <center><h1 id="stats-pkmn-label"></h1></center>
-          </div>
-          <div id="pokemonList" style="color: black;">
-            <table id="pokemonList_table" class="display" cellspacing="0" width="100%">
-              <thead>
-                <tr>
-                  <th>Icon</th> <th>Name</th> <th>Count</th> <th>%</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-            <div id="pokeStatStatus" style="color: black;"></div>
-          </div>
-          <div class="stats-label-container">
-            <center><h1 id="stats-gym-label"></h1></center>
-          </div>
-          <div id="arenaList" style="color: black;"></div>
-          <div class="stats-label-container">
-            <center><h1 id="stats-pkstop-label"></h1></center>
-          </div>
-          <div id="pokestopList" style="color: black;"></div>
+          <div><center><a href="stats">Full Stats</a></center></div>
+        </div>
+        <div class="switch-container">
+          <center><h1 id="stats-ldg-label">Loading...</h1></center>
+        </div>
+        <div id="stat-accordion">
+          <h3>Pokémon</h3>
+          <div>
+            <div id="pokemonList" style="color: black;">
+              <table id="pokemonList_table" class="display" cellspacing="0" width="100%">
+                <thead>
+                  <tr>
+                    <th>Icon</th> <th>Name</th> <th>Count</th> <th>%</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+              <div id="pokeStatStatus" style="color: black;"></div>
+            </div>
+          </div> <!-- End Pokémon -->
+
+          <h3>Gyms</h3>
+          <div>
+            <div id="arenaList" style="color: black;"></div>
+          </div> <!-- End gyms -->
+
+          <h3>PokéStops</h3>
+          <div>
+            <div id="pokestopList" style="color: black;"></div>
+          </div> <!-- End PokéStops -->
+
         </div>
       </nav>
       <div id="map"></div>
