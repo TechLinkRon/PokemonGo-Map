@@ -1015,7 +1015,7 @@ function updateMap () {
 //    drawScanPath(result.scanned);
     clearStaleMarkers()
     if ($('#stats').hasClass('visible')) {
-      countMarkers()
+      countMarkers(map)
     }
   })
 }

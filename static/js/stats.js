@@ -1,4 +1,4 @@
-function countMarkers () { // eslint-disable-line no-unused-vars
+function countMarkers (map) { // eslint-disable-line no-unused-vars
   document.getElementById('stats-ldg-label').innerHTML = ''
   document.getElementById('stats-pkmn-label').innerHTML = 'Pokémon'
   document.getElementById('stats-gym-label').innerHTML = 'Gyms'
@@ -23,11 +23,10 @@ function countMarkers () { // eslint-disable-line no-unused-vars
 
   if (Store.get('showPokemon')) {
     $.each(mapData.pokemons, function (key, value) {
-
       var thisPokeLocation = { lat: mapData.pokemons[key]['latitude'], lng: mapData.pokemons[key]['longitude'] }
       thisPokeIsVisible = currentVisibleMap.contains(thisPokeLocation)
 
-      if(thisPokeIsVisible) {
+      if (thisPokeIsVisible) {
         pkmnTotal++
         if (pkmnCount[mapData.pokemons[key]['pokemon_id']] === 0 || !pkmnCount[mapData.pokemons[key]['pokemon_id']]) {
           pkmnCount[mapData.pokemons[key]['pokemon_id']] = {
@@ -75,7 +74,6 @@ function countMarkers () { // eslint-disable-line no-unused-vars
   // begin Gyms processing
   if (Store.get('showGyms')) {
     $.each(mapData.gyms, function (key, value) {
-
       var thisGymLocation = { lat: mapData.gyms[key]['latitude'], lng: mapData.gyms[key]['longitude'] }
       thisGymIsVisible = currentVisibleMap.contains(thisGymLocation)
 
@@ -111,11 +109,10 @@ function countMarkers () { // eslint-disable-line no-unused-vars
 
   if (Store.get('showPokestops')) {
     $.each(mapData.pokestops, function (key, value) {
-
       var thisPokestopLocation = { lat: mapData.pokestops[key]['latitude'], lng: mapData.pokestops[key]['longitude'] }
       thisPokestopIsVisible = currentVisibleMap.contains(thisPokestopLocation)
 
-      if (thisPokestopIsVisible)
+      if (thisPokestopIsVisible) {
         if (mapData.pokestops[key]['lure_expiration'] && mapData.pokestops[key]['lure_expiration'] > 0) {
           if (pokestopCount[1] === 0 || !pokestopCount[1]) {
             pokestopCount[1] = 1
@@ -130,6 +127,7 @@ function countMarkers () { // eslint-disable-line no-unused-vars
           }
         }
         pokestopTotal++
+      }
     })
     var pokestopListString = '<table><th>Icon</th><th>Status</th><th>Count</th><th>%</th><tr><td></td><td>Total</td><td>' + pokestopTotal + '</td></tr>'
     for (i = 0; i < pokestopCount.length; i++) {
