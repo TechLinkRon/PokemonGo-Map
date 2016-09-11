@@ -13,18 +13,32 @@ function countMarkers () { // eslint-disable-line no-unused-vars
   var pokestopTotal = 0
   var pokeStatTable = $('#pokemonList_table').DataTable()
 
+  // Bounds of the currently visible map
+  var currentVisibleMap = map.getBounds()
+
+  // Is a particular Pokémon/Gym/Pokéstop within the currently visible map?
+  var thisPokeIsVisible = false
+  var thisGymIsVisible = false
+  var thisPokestopIsVisible = false
+
   if (Store.get('showPokemon')) {
     $.each(mapData.pokemons, function (key, value) {
-      if (pkmnCount[mapData.pokemons[key]['pokemon_id']] === 0 || !pkmnCount[mapData.pokemons[key]['pokemon_id']]) {
-        pkmnCount[mapData.pokemons[key]['pokemon_id']] = {
-          'ID': mapData.pokemons[key]['pokemon_id'],
-          'Count': 1,
-          'Name': mapData.pokemons[key]['pokemon_name']
+
+      var thisPokeLocation = { lat: mapData.pokemons[key]['latitude'], lng: mapData.pokemons[key]['longitude'] }
+      thisPokeIsVisible = currentVisibleMap.contains(thisPokeLocation)
+
+      if(thisPokeIsVisible) {
+        pkmnTotal++
+        if (pkmnCount[mapData.pokemons[key]['pokemon_id']] === 0 || !pkmnCount[mapData.pokemons[key]['pokemon_id']]) {
+          pkmnCount[mapData.pokemons[key]['pokemon_id']] = {
+            'ID': mapData.pokemons[key]['pokemon_id'],
+            'Count': 1,
+            'Name': mapData.pokemons[key]['pokemon_name']
+          }
+        } else {
+          pkmnCount[mapData.pokemons[key]['pokemon_id']].Count += 1
         }
-      } else {
-        pkmnCount[mapData.pokemons[key]['pokemon_id']].Count += 1
       }
-      pkmnTotal++
     })
 
     var pokeCounts = []
@@ -56,17 +70,25 @@ function countMarkers () { // eslint-disable-line no-unused-vars
 
     document.getElementById('pokeStatStatus').innerHTML = 'Pokémon markers are disabled'
     $('#pokemonList_table').dataTable().hide()
-  }
+  }   // end Pokémon processing
 
+  // begin Gyms processing
   if (Store.get('showGyms')) {
     $.each(mapData.gyms, function (key, value) {
-      if (arenaCount[mapData.gyms[key]['team_id']] === 0 || !arenaCount[mapData.gyms[key]['team_id']]) {
-        arenaCount[mapData.gyms[key]['team_id']] = 1
-      } else {
-        arenaCount[mapData.gyms[key]['team_id']] += 1
+
+      var thisGymLocation = { lat: mapData.gyms[key]['latitude'], lng: mapData.gyms[key]['longitude'] }
+      thisGymIsVisible = currentVisibleMap.contains(thisGymLocation)
+
+      if (thisGymIsVisible) {
+        arenaTotal++
+        if (arenaCount[mapData.gyms[key]['team_id']] === 0 || !arenaCount[mapData.gyms[key]['team_id']]) {
+          arenaCount[mapData.gyms[key]['team_id']] = 1
+        } else {
+          arenaCount[mapData.gyms[key]['team_id']] += 1
+        }
       }
-      arenaTotal++
     })
+
     var arenaListString = '<table><th>Icon</th><th>Team Color</th><th>Count</th><th>%</th><tr><td></td><td>Total</td><td>' + arenaTotal + '</td></tr>'
     for (i = 0; i < arenaCount.length; i++) {
       if (arenaCount[i] > 0) {
@@ -89,20 +111,25 @@ function countMarkers () { // eslint-disable-line no-unused-vars
 
   if (Store.get('showPokestops')) {
     $.each(mapData.pokestops, function (key, value) {
-      if (mapData.pokestops[key]['lure_expiration'] && mapData.pokestops[key]['lure_expiration'] > 0) {
-        if (pokestopCount[1] === 0 || !pokestopCount[1]) {
-          pokestopCount[1] = 1
+
+      var thisPokestopLocation = { lat: mapData.pokestops[key]['latitude'], lng: mapData.pokestops[key]['longitude'] }
+      thisPokestopIsVisible = currentVisibleMap.contains(thisPokestopLocation)
+
+      if (thisPokestopIsVisible)
+        if (mapData.pokestops[key]['lure_expiration'] && mapData.pokestops[key]['lure_expiration'] > 0) {
+          if (pokestopCount[1] === 0 || !pokestopCount[1]) {
+            pokestopCount[1] = 1
+          } else {
+            pokestopCount[1] += 1
+          }
         } else {
-          pokestopCount[1] += 1
+          if (pokestopCount[0] === 0 || !pokestopCount[0]) {
+            pokestopCount[0] = 1
+          } else {
+            pokestopCount[0] += 1
+          }
         }
-      } else {
-        if (pokestopCount[0] === 0 || !pokestopCount[0]) {
-          pokestopCount[0] = 1
-        } else {
-          pokestopCount[0] += 1
-        }
-      }
-      pokestopTotal++
+        pokestopTotal++
     })
     var pokestopListString = '<table><th>Icon</th><th>Status</th><th>Count</th><th>%</th><tr><td></td><td>Total</td><td>' + pokestopTotal + '</td></tr>'
     for (i = 0; i < pokestopCount.length; i++) {
